@@ -1,5 +1,5 @@
 # Self-documenting Makefile
-# Version: s5-dev
+# Version: s6
 # Source: https://github.com/jara001/Makefile
 # Originally:
 # Self-documenting Makefile by prwhite

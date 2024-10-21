@@ -1,5 +1,5 @@
 # Self-documenting Makefile
-# Version: s8
+# Version: s9
 # Source: https://github.com/jara001/Makefile
 # Originally:
 # Self-documenting Makefile by prwhite
@@ -13,8 +13,8 @@ help: ## Show this help message.
 	@echo "Usage: make [target] ..."
 	@echo
 	@echo -n "Targets:"
-	@grep --color=auto -F "## " $(MAKEFILE_LIST) | grep --color=auto -F -v grep | sed -e "s/\\$$//" | sed -e "s/##//" | awk -F: '{ if (width < length($$1)) { width=length($$1) }; key[NR] = $$1; value[NR] = $$2; } END { format = sprintf("%%-%ds  %%s\n", width); for (;i <= NR; i++) { printf format, key[i], value[i]; } }'
-	@grep "##@[^ \"]*" $(MAKEFILE_LIST) | grep --color=auto -F -v grep | sed -e "s/^.*##@\\([a-zA-Z][a-zA-Z]*\\).*\$$/\1/" | sed "/^\\$$/d" | sort | uniq | { while read line; do echo; echo -n $$line targets:; grep "##@$$line" $(MAKEFILE_LIST) | sed -e "s/##@$$line//" | awk -F: '{ if (width < length($$1)) { width=length($$1) }; key[NR] = $$1; value[NR] = $$2; } END { format = sprintf("%%-%ds  %%s\n", width); for (;i <= NR; i++) { printf format, key[i], value[i]; } }'; done }
+	@grep --color=auto -F "## " $(MAKEFILE_LIST) | grep --color=auto -F -v grep | sed -e "s/\\$$//" | sed -e "s/[^:]*##//" | awk -F: '{ if (width < length($$1)) { width=length($$1) }; key[NR] = $$1; value[NR] = $$2; } END { format = sprintf("%%-%ds   %%s\n", width); for (;i <= NR; i++) { printf format, key[i], value[i]; } }'
+	@grep "##@[^ \"]*" $(MAKEFILE_LIST) | grep --color=auto -F -v grep | sed -e "s/^.*##@\\([a-zA-Z][a-zA-Z]*\\).*\$$/\1/" | sed "/^\\$$/d" | sort | uniq | { while read line; do echo; echo -n $$line targets:; grep "##@$$line" $(MAKEFILE_LIST) | sed -e "s/[^:]*##@$$line//" | awk -F: '{ if (width < length($$1)) { width=length($$1) }; key[NR] = $$1; value[NR] = $$2; } END { format = sprintf("%%-%ds   %%s\n", width); for (;i <= NR; i++) { printf format, key[i], value[i]; } }'; done }
 
 
 build: ##@Build Build a Python3 wheel.
